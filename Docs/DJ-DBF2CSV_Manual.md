@@ -35,7 +35,7 @@
 
 ## 1. Overview
 
-**DJ-DBF2CSV** is a portable, standalone Windows desktop application that converts dBASE (`.DBF`) database files into plain-text **CSV** or **TSV** files in bulk. It is designed to be simple, fast, and require no installation.
+**DJ-DBF2CSV** is a portable, standalone Windows desktop application that converts dBASE / FoxPro / Visual FoxPro (`.DBF`) database files into plain-text **CSV** or **TSV** files in bulk. It is designed to be simple, fast, and require no installation.
 
 Key capabilities:
 
