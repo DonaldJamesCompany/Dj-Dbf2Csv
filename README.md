@@ -1,5 +1,7 @@
 # DJ-DBF2CSV
 
+![Version](https://img.shields.io/badge/version-1.1.5-blue)
+
 A standalone, portable Windows desktop application that bulk-converts dBASE (`.DBF`) files to **CSV** (Comma Separated Values) or **TSV** (Tab Separated Values) format.
 
 Built with **.NET 9** and **WPF** — ships as a single `.exe` with no installation required.

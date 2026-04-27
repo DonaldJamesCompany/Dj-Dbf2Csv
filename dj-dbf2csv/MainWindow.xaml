@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dj_dbf2csv"
         mc:Ignorable="d"
-        Title="DJ-DBF2CSV" Height="590" Width="700"
+        Title="DJ-DBF2CSV v1.1.5"
         ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Margin="12">
         <Grid.RowDefinitions>
@@ -88,6 +88,8 @@
                              VerticalAlignment="Center" Margin="0,0,24,0"
                              Checked="Separator_Changed"/>
                 <CheckBox x:Name="ChkQuoteStrings" Content="Quote strings" IsChecked="True"
+                          VerticalAlignment="Center" Margin="0,0,16,0"/>
+                <CheckBox x:Name="ChkIncludeHeaders" Content="Include column headers" IsChecked="True"
                           VerticalAlignment="Center"/>
             </StackPanel>
         </Grid>

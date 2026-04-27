@@ -65,6 +65,7 @@ namespace dj_dbf2csv
             CmbEncoding.SelectedIndex = 0;
             RbComma.IsChecked = true;
             ChkQuoteStrings.IsChecked = true;
+            ChkIncludeHeaders.IsChecked = true;
             TxtStatus.Clear();
             BtnConvert.IsEnabled = false;
         }
@@ -76,6 +77,7 @@ namespace dj_dbf2csv
             var encodingTag = ((ComboBoxItem)CmbEncoding.SelectedItem).Tag?.ToString() ?? "utf-8";
             bool tabMode = IsTabMode;
             bool quoteStrings = ChkQuoteStrings.IsChecked == true;
+            bool includeHeaders = ChkIncludeHeaders.IsChecked == true;
             char separator = tabMode ? '\t' : ',';
             string extension = tabMode ? ".tsv" : ".csv";
             string formatLabel = tabMode ? "TSV" : "CSV";
@@ -102,6 +104,7 @@ namespace dj_dbf2csv
             Log($"Starting conversion — {dbfFiles.Length} file(s) found.");
             Log($"Output format   : {formatLabel} (separator: {(tabMode ? "Tab" : "Comma")})");
             Log($"Quote strings   : {(quoteStrings ? "Yes" : "No")}");
+            Log($"Column headers  : {(includeHeaders ? "Yes" : "No")}");
             Log($"Output encoding : {encoding.EncodingName}");
             Log($"Output folder   : {outputDir}");
             Log(new string('─', 60));
@@ -119,7 +122,7 @@ namespace dj_dbf2csv
                     try
                     {
                         AppendLog($"  Converting : {Path.GetFileName(dbfPath)} …");
-                        ConvertDbf(dbfPath, outPath, encoding, separator, quoteStrings);
+                        ConvertDbf(dbfPath, outPath, encoding, separator, quoteStrings, includeHeaders);
                         AppendLog($"  Done       : {Path.GetFileName(outPath)}");
                         succeeded++;
                     }
@@ -138,7 +141,7 @@ namespace dj_dbf2csv
 
         // ── Conversion logic ─────────────────────────────────────────────────
 
-        private static void ConvertDbf(string dbfPath, string outPath, Encoding outEncoding, char separator, bool quoteStrings)
+        private static void ConvertDbf(string dbfPath, string outPath, Encoding outEncoding, char separator, bool quoteStrings, bool includeHeaders)
         {
             var options = new DbfDataReaderOptions { SkipDeletedRecords = true };
 
@@ -146,10 +149,13 @@ namespace dj_dbf2csv
             using var writer = new StreamWriter(outPath, append: false, encoding: outEncoding);
 
             // Write header row (headers are never quoted)
-            var columnNames = new List<string>(dbfReader.FieldCount);
-            for (int i = 0; i < dbfReader.FieldCount; i++)
-                columnNames.Add(dbfReader.GetName(i));
-            writer.WriteLine(BuildRow(columnNames, separator, quoteStrings: false));
+            if (includeHeaders)
+            {
+                var columnNames = new List<string>(dbfReader.FieldCount);
+                for (int i = 0; i < dbfReader.FieldCount; i++)
+                    columnNames.Add(dbfReader.GetName(i));
+                writer.WriteLine(BuildRow(columnNames, separator, quoteStrings: false));
+            }
 
             // Write data rows
             while (dbfReader.Read())
@@ -217,6 +223,7 @@ namespace dj_dbf2csv
                 RbComma.IsEnabled = enabled;
                 RbTab.IsEnabled = enabled;
                 ChkQuoteStrings.IsEnabled = enabled;
+                ChkIncludeHeaders.IsEnabled = enabled;
             });
         }
 
