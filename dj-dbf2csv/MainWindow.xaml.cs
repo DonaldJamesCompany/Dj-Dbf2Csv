@@ -24,7 +24,7 @@ namespace dj_dbf2csv
 
         private void Separator_Changed(object sender, RoutedEventArgs e)
         {
-            if (LblOutputFolder is null) return; // guard during InitializeComponent
+            if (LblOutputFolder is null || RbTab is null) return; // guard during InitializeComponent
             LblOutputFolder.Content = IsTabMode ? "Output (.TSV) Folder:" : "Output (.CSV) Folder:";
         }
 
