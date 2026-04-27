@@ -66,6 +66,7 @@ namespace dj_dbf2csv
             RbComma.IsChecked = true;
             ChkQuoteStrings.IsChecked = true;
             ChkIncludeHeaders.IsChecked = true;
+            ChkOverwrite.IsChecked = true;
             TxtStatus.Clear();
             BtnConvert.IsEnabled = false;
         }
@@ -78,6 +79,7 @@ namespace dj_dbf2csv
             bool tabMode = IsTabMode;
             bool quoteStrings = ChkQuoteStrings.IsChecked == true;
             bool includeHeaders = ChkIncludeHeaders.IsChecked == true;
+            bool overwrite = ChkOverwrite.IsChecked == true;
             char separator = tabMode ? '\t' : ',';
             string extension = tabMode ? ".tsv" : ".csv";
             string formatLabel = tabMode ? "TSV" : "CSV";
@@ -105,22 +107,32 @@ namespace dj_dbf2csv
             Log($"Output format   : {formatLabel} (separator: {(tabMode ? "Tab" : "Comma")})");
             Log($"Quote strings   : {(quoteStrings ? "Yes" : "No")}");
             Log($"Column headers  : {(includeHeaders ? "Yes" : "No")}");
+            Log($"Overwrite files : {(overwrite ? "Yes" : "No")}");
             Log($"Output encoding : {encoding.EncodingName}");
             Log($"Output folder   : {outputDir}");
             Log(new string('─', 60));
 
             int succeeded = 0;
             int failed = 0;
+            int skipped = 0;
 
             await Task.Run(() =>
             {
                 foreach (var dbfPath in dbfFiles)
                 {
+                    // Preserve the original filename casing; extension is always lowercase
                     var fileName = Path.GetFileNameWithoutExtension(dbfPath);
                     var outPath = Path.Combine(outputDir, fileName + extension);
 
                     try
                     {
+                        if (!overwrite && File.Exists(outPath))
+                        {
+                            AppendLog($"  Skipped    : {Path.GetFileName(outPath)} (already exists)");
+                            skipped++;
+                            continue;
+                        }
+
                         AppendLog($"  Converting : {Path.GetFileName(dbfPath)} …");
                         ConvertDbf(dbfPath, outPath, encoding, separator, quoteStrings, includeHeaders);
                         AppendLog($"  Done       : {Path.GetFileName(outPath)}");
@@ -135,7 +147,7 @@ namespace dj_dbf2csv
             });
 
             Log(new string('─', 60));
-            Log($"Conversion complete. Succeeded: {succeeded}  Failed: {failed}");
+            Log($"Conversion complete. Succeeded: {succeeded}  Skipped: {skipped}  Failed: {failed}");
             SetUiEnabled(true);
         }
 
@@ -224,15 +236,19 @@ namespace dj_dbf2csv
                 RbTab.IsEnabled = enabled;
                 ChkQuoteStrings.IsEnabled = enabled;
                 ChkIncludeHeaders.IsEnabled = enabled;
+                ChkOverwrite.IsEnabled = enabled;
             });
         }
 
         /// <summary>Appends a line to the status box from any thread.</summary>
         private void AppendLog(string message) =>
-            Dispatcher.Invoke(() => TxtStatus.AppendText(message + Environment.NewLine));
+            Dispatcher.Invoke(() => { TxtStatus.AppendText(message + Environment.NewLine); TxtStatus.ScrollToEnd(); });
 
         /// <summary>Logs a line from the UI thread directly.</summary>
-        private void Log(string message) =>
+        private void Log(string message)
+        {
             TxtStatus.AppendText(message + Environment.NewLine);
+            TxtStatus.ScrollToEnd();
+        }
     }
 }

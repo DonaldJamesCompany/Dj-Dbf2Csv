@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dj_dbf2csv"
         mc:Ignorable="d"
-        Title="DJ-DBF2CSV v1.1.5"
+        Title="DJ-DBF2CSV v1.1.6"
         ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Margin="12">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -94,8 +95,21 @@
             </StackPanel>
         </Grid>
 
+        <!-- File Options -->
+        <Grid Grid.Row="4" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="File Options:" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <CheckBox x:Name="ChkOverwrite" Content="Overwrite file(s) if exist" IsChecked="True"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
         <!-- Status / Output Log -->
-        <GroupBox Grid.Row="4" Header="Status" Margin="0,0,0,8">
+        <GroupBox Grid.Row="5" Header="Status" Margin="0,0,0,8">
             <TextBox x:Name="TxtStatus"
                      IsReadOnly="True"
                      VerticalScrollBarVisibility="Auto"
@@ -105,11 +119,11 @@
                      FontSize="12"
                      Padding="4"
                      Background="#1E1E1E"
-                     Foreground="#DCDCDC"/>
+                     Foreground="#00FF00"/>
         </GroupBox>
 
         <!-- Buttons -->
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Left">
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Left">
             <Button x:Name="BtnExit" Content="EXIT" Width="80" Margin="0,0,8,0"
                     Click="BtnExit_Click"/>
             <Button x:Name="BtnReset" Content="RESET" Width="80" Margin="0,0,8,0"

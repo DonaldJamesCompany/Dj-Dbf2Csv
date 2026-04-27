@@ -1,6 +1,6 @@
 # DJ-DBF2CSV — User Manual
 
-> **Version:** 1.1.5
+> **Version:** 1.1.6
 > **Platform:** Windows 10 or later (64-bit)  
 > **Runtime:** .NET 9 Desktop Runtime
 
