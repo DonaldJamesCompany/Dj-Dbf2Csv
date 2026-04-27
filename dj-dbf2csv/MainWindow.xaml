@@ -1,0 +1,120 @@
+﻿<Window x:Class="dj_dbf2csv.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dj_dbf2csv"
+        mc:Ignorable="d"
+        Title="DJ-DBF2CSV" Height="590" Width="700"
+        ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Input (.DBF) Folder -->
+        <Grid Grid.Row="0" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Input (.DBF) Folder:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TxtInputFolder" Grid.Column="1" IsReadOnly="True"
+                     VerticalAlignment="Center" Padding="4,2"
+                     ToolTip="Select the folder containing .DBF files"/>
+            <Button x:Name="BrowseInputBtn" Grid.Column="2" Content="Browse…" Margin="6,0,0,0"
+                    Click="BrowseInput_Click"/>
+        </Grid>
+
+        <!-- Output (.CSV) Folder -->
+        <Grid Grid.Row="1" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="LblOutputFolder" Grid.Column="0" Content="Output (.CSV) Folder:" VerticalAlignment="Center"/>
+            <TextBox x:Name="TxtOutputFolder" Grid.Column="1" IsReadOnly="True"
+                     VerticalAlignment="Center" Padding="4,2"
+                     ToolTip="Select the destination folder for .CSV files"/>
+            <Button x:Name="BrowseOutputBtn" Grid.Column="2" Content="Browse…" Margin="6,0,0,0"
+                    Click="BrowseOutput_Click"/>
+        </Grid>
+
+        <!-- Character Set -->
+        <Grid Grid.Row="2" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Character Set:" VerticalAlignment="Center"/>
+            <ComboBox x:Name="CmbEncoding" Grid.Column="1"
+                      VerticalAlignment="Center" Padding="4,2"
+                      SelectedIndex="0">
+                <ComboBoxItem Content="UTF-8" Tag="utf-8"/>
+                <ComboBoxItem Content="UTF-16 (Unicode)" Tag="utf-16"/>
+                <ComboBoxItem Content="Windows-1252 (Western)" Tag="windows-1252"/>
+                <ComboBoxItem Content="ISO-8859-1 (Latin-1)" Tag="iso-8859-1"/>
+                <ComboBoxItem Content="ISO-8859-2 (Latin-2)" Tag="iso-8859-2"/>
+                <ComboBoxItem Content="CP437 (DOS Latin US)" Tag="cp437"/>
+                <ComboBoxItem Content="CP850 (DOS Latin-1)" Tag="cp850"/>
+                <ComboBoxItem Content="Shift-JIS (Japanese)" Tag="shift_jis"/>
+                <ComboBoxItem Content="GB2312 (Chinese Simplified)" Tag="gb2312"/>
+                <ComboBoxItem Content="Big5 (Chinese Traditional)" Tag="big5"/>
+                <ComboBoxItem Content="KOI8-R (Russian)" Tag="koi8-r"/>
+                <ComboBoxItem Content="Windows-1251 (Cyrillic)" Tag="windows-1251"/>
+            </ComboBox>
+        </Grid>
+
+        <!-- Output Options -->
+        <Grid Grid.Row="3" Margin="0,0,0,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="160"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Output Options:" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <RadioButton x:Name="RbComma" Content="Comma separated" IsChecked="True"
+                             VerticalAlignment="Center" Margin="0,0,16,0"
+                             Checked="Separator_Changed"/>
+                <RadioButton x:Name="RbTab" Content="Tab separated"
+                             VerticalAlignment="Center" Margin="0,0,24,0"
+                             Checked="Separator_Changed"/>
+                <CheckBox x:Name="ChkQuoteStrings" Content="Quote strings" IsChecked="True"
+                          VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Status / Output Log -->
+        <GroupBox Grid.Row="4" Header="Status" Margin="0,0,0,8">
+            <TextBox x:Name="TxtStatus"
+                     IsReadOnly="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     TextWrapping="Wrap"
+                     FontFamily="Consolas"
+                     FontSize="12"
+                     Padding="4"
+                     Background="#1E1E1E"
+                     Foreground="#DCDCDC"/>
+        </GroupBox>
+
+        <!-- Buttons -->
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Left">
+            <Button x:Name="BtnExit" Content="EXIT" Width="80" Margin="0,0,8,0"
+                    Click="BtnExit_Click"/>
+            <Button x:Name="BtnReset" Content="RESET" Width="80" Margin="0,0,8,0"
+                    Click="BtnReset_Click"/>
+            <Button x:Name="BtnConvert" Content="CONVERT" Width="100"
+                    IsEnabled="False"
+                    Click="BtnConvert_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
