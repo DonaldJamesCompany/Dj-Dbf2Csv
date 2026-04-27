@@ -17,8 +17,9 @@
    - 5.2 [Output Folder](#52-output-folder)
    - 5.3 [Character Set](#53-character-set)
    - 5.4 [Output Options](#54-output-options)
-   - 5.5 [Status Log](#55-status-log)
-   - 5.6 [Buttons](#56-buttons)
+   - 5.5 [File Options](#55-file-options)
+   - 5.6 [Status Log](#56-status-log)
+   - 5.7 [Buttons](#57-buttons)
 6. [Step-by-Step Conversion Guide](#6-step-by-step-conversion-guide)
 7. [Output File Format](#7-output-file-format)
    - 7.1 [CSV (Comma Separated Values)](#71-csv-comma-separated-values)
@@ -40,8 +41,11 @@ Key capabilities:
 - Select a source folder and convert **all** `.DBF` files in it at once
 - Output to either **CSV** (comma-separated) or **TSV** (tab-separated) format
 - Control **string quoting** per RFC 4180
+- Optionally **include or exclude column headers** in the output
+- Choose whether to **overwrite or skip** existing output files
+- Output filenames **preserve the original casing** of the source `.DBF` file; extensions are always lowercase
 - Choose from **12 common character set encodings** to match the source data
-- Monitor progress in real time via the built-in **Status log**
+- Monitor progress in real time via the built-in **auto-scrolling Status log**
 
 ---
 
@@ -79,22 +83,23 @@ No configuration file or initial setup is needed.
 ## 5. User Interface Reference
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│  DJ-DBF2CSV                                                     │
-├─────────────────────────────────────────────────────────────────┤
-│  Input (.DBF) Folder:   [ path/to/dbf/folder        ] [Browse] │
-│  Output (.CSV) Folder:  [ path/to/output/folder     ] [Browse] │
-│  Character Set:         [ UTF-8                    ▼]          │
-│  Output Options:        ● Comma separated  ○ Tab separated     │
-│                         ☑ Quote strings                         │
-├─────────────────────────────────────────────────────────────────┤
-│  Status                                                         │
-│  ┌───────────────────────────────────────────────────────────┐  │
-│  │  (conversion log appears here)                           │  │
-│  └───────────────────────────────────────────────────────────┘  │
-├─────────────────────────────────────────────────────────────────┤
-│  [ EXIT ]  [ RESET ]  [ CONVERT ]                               │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│  DJ-DBF2CSV v1.1.6                                                   │
+├──────────────────────────────────────────────────────────────────────┤
+│  Input (.DBF) Folder:   [ path/to/dbf/folder           ] [Browse…]  │
+│  Output (.CSV) Folder:  [ path/to/output/folder        ] [Browse…]  │
+│  Character Set:         [ UTF-8                       ▼]            │
+│  Output Options:        ● Comma separated  ○ Tab separated          │
+│                         ☑ Quote strings  ☑ Include column headers   │
+│  File Options:          ☑ Overwrite file(s) if exist                │
+├──────────────────────────────────────────────────────────────────────┤
+│  Status                                                              │
+│  ┌────────────────────────────────────────────────────────────────┐  │
+│  │  (auto-scrolling conversion log — green text on dark bg)      │  │
+│  └────────────────────────────────────────────────────────────────┘  │
+├──────────────────────────────────────────────────────────────────────┤
+│  [ EXIT ]  [ RESET ]  [ CONVERT ]                                    │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ### 5.1 Input (.DBF) Folder
@@ -116,11 +121,11 @@ The application will scan this folder for all files with the `.DBF` extension (n
 | Text box | Displays the path of the selected output folder (read-only) |
 | **Browse…** button | Opens a folder-picker dialog to select the destination folder |
 
-Output files are written to this folder with the same base name as the source `.DBF` file and the appropriate extension (`.csv` or `.tsv`).
+Output files are written to this folder with the same base name as the source `.DBF` file and the appropriate extension (`.csv` or `.tsv`). The output filename **preserves the original casing** of the `.DBF` filename; the extension is always lowercase.
 
-> **Example:** `CUSTOMERS.DBF` → `CUSTOMERS.csv` (or `CUSTOMERS.tsv`)
+> **Example:** `Customers.DBF` → `Customers.csv` (or `Customers.tsv`)
 
-If a file with the same name already exists in the output folder it will be **overwritten without warning**.
+Whether an existing file is overwritten or skipped is controlled by the **Overwrite file(s) if exist** checkbox in the File Options row.
 
 ---
 
@@ -169,28 +174,50 @@ When quoting is active, any double-quote character inside a field value is escap
 
 > **Note:** Column header names (first row) are never quoted, regardless of this setting.
 
+#### Include column headers
+
+| State | Behaviour |
+|---|---|
+| ☑ Checked *(default)* | The first row of every output file contains the field names from the source `.DBF` |
+| ☐ Unchecked | The header row is omitted; the output file begins directly with data rows |
+
 ---
 
-### 5.5 Status Log
+### 5.5 File Options
 
-A scrollable, read-only text area that displays verbose output during conversion. It reports:
+#### Overwrite file(s) if exist
+
+| State | Behaviour |
+|---|---|
+| ☑ Checked *(default)* | If an output file with the same name already exists it will be **overwritten** |
+| ☐ Unchecked | If an output file with the same name already exists it will be **skipped**; the status log will note `Skipped` for that file |
+
+The final summary line in the status log reports counts for **Succeeded**, **Skipped**, and **Failed** separately.
+
+---
+
+### 5.6 Status Log
+
+A scrollable, read-only text area that displays verbose output during conversion. Text is rendered in **bright green on a dark background**. The log **auto-scrolls** to the latest line as each entry is added.
+
+It reports:
 
 - Number of `.DBF` files found
-- Output format, quoting mode, and encoding in use
-- Each file being converted and its result
-- A final summary line (files succeeded / failed)
+- Output format, quoting, header, overwrite mode, and encoding in use
+- Each file being converted and its result (`Done`, `Skipped`, or `[ERROR]`)
+- A final summary line: `Conversion complete. Succeeded: N  Skipped: N  Failed: N`
 
 The log is **not cleared automatically** between runs; use **RESET** to clear it.
 
 ---
 
-### 5.6 Buttons
+### 5.7 Buttons
 
 | Button | Behaviour |
 |---|---|
 | **EXIT** | Closes the application immediately |
-| **RESET** | Clears both folder paths, resets the character set to UTF-8, restores default output options, and clears the status log. Also disables the CONVERT button. |
-| **CONVERT** | Starts the bulk conversion. This button is **disabled** until both an input and output folder have been selected. It is also disabled while a conversion is in progress. |
+| **RESET** | Clears both folder paths; resets Character Set to UTF-8; restores all Output Options and File Options to their defaults (all checkboxes checked, Comma separated selected); clears the status log; disables the CONVERT button |
+| **CONVERT** | Starts the bulk conversion. Disabled until both an input and output folder have been selected. Also disabled while a conversion is in progress. |
 
 ---
 
@@ -201,10 +228,12 @@ The log is **not cleared automatically** between runs; use **RESET** to clear it
 3. Click **Browse…** next to the **Output Folder** → navigate to or create the destination folder → click **Select Folder**
 4. Select the appropriate **Character Set** from the dropdown (use UTF-8 if unsure)
 5. Choose **Comma separated** (produces `.csv`) or **Tab separated** (produces `.tsv`)
-6. Leave **Quote strings** checked for maximum compatibility, or uncheck for bare output
-7. Click **CONVERT**
-8. Watch the **Status** log for progress and results
-9. When the log shows `Conversion complete`, your output files are ready in the selected output folder
+6. Set **Quote strings** — leave checked for maximum compatibility, or uncheck for bare unquoted output
+7. Set **Include column headers** — leave checked to include field names as the first row, or uncheck to output data only
+8. Set **Overwrite file(s) if exist** — leave checked to replace any existing files, or uncheck to skip files that already exist
+9. Click **CONVERT**
+10. Watch the **Status** log as it auto-scrolls through progress and results
+11. When the log shows `Conversion complete`, your output files are ready in the selected output folder
 
 ---
 
@@ -294,7 +323,7 @@ Memo (`.DBT` / `.FPT`) fields are read as text when the associated memo file is 
 | `[WARN] No .DBF files found` | Input folder contains no `.DBF` files | Verify the folder — DBF files are not searched recursively in sub-folders |
 | Garbled text in output | Wrong character set selected | Try Windows-1252, CP850, or CP437 for legacy DOS/Windows DBF files |
 | `[ERROR]` on a specific file | Corrupt, locked, or unsupported DBF variant | Check the file is not open in another application; try opening it in a DBF viewer |
-| Output file already existed | File is silently overwritten | Move or rename existing output files before converting if you need to keep them |
+| Output file skipped unexpectedly | **Overwrite file(s) if exist** is unchecked | Check the checkbox or remove/rename the existing output file |
 
 ---
 
@@ -307,13 +336,16 @@ A: No. Only `.DBF` files directly inside the selected input folder are processed
 A: Not directly — select a folder that contains only that one `.DBF` file, or copy the file to a temporary folder first.
 
 **Q: Will existing output files be overwritten?**  
-A: Yes, without confirmation. If you need to preserve previous output, choose a different output folder or move the files first.
+A: By default, yes. If you uncheck **Overwrite file(s) if exist**, any file that already exists in the output folder will be skipped instead, and the status log will report it as `Skipped`.
 
 **Q: What happens to deleted records in the DBF?**  
 A: They are skipped automatically. Only active (non-deleted) records are written to the output.
 
 **Q: The first row of my CSV has column names in uppercase — is that normal?**  
-A: Yes. DBF field names are stored in uppercase internally; DJ-DBF2CSV writes them as-is in the header row.
+A: Yes. DBF field names are stored in uppercase internally; DJ-DBF2CSV writes them as-is in the header row. If you don't want a header row at all, uncheck **Include column headers**.
+
+**Q: Why does the output filename use the same casing as the `.DBF` file?**  
+A: DJ-DBF2CSV preserves the original filename casing so files are easy to match back to their source. Only the extension is normalised to lowercase (`.csv` or `.tsv`).
 
 **Q: Can I use the output files with Microsoft Excel?**  
 A: Yes. Open Excel, use **File → Open**, change the file filter to "All Files", and select the `.csv` or `.tsv` file. Excel's import wizard will guide you through delimiter and encoding selection.

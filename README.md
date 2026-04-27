@@ -13,8 +13,11 @@ Built with **.NET 9** and **WPF** — ships as a single `.exe` with no installat
 - **Bulk conversion** — converts every `.DBF` file found in a selected input folder in one pass
 - **CSV or TSV output** — switch between comma-separated and tab-separated output at any time
 - **Quote strings** — optional RFC 4180-compliant quoting of string fields (on by default)
+- **Column headers** — optionally include or exclude the header row in output files (on by default)
+- **Overwrite control** — choose to overwrite existing output files or skip them (on by default)
 - **12 character-set encodings** — UTF-8, UTF-16, Windows-1252, ISO-8859-x, DOS code pages, CJK, Cyrillic, and more
-- **Live status log** — verbose, colour-coded output log shows exactly what is happening during conversion
+- **Live status log** — auto-scrolling log with green-on-black display shows verbose progress in real time
+- **Filename fidelity** — output filenames preserve the original `.DBF` casing; extensions are always lowercase (`.csv` / `.tsv`)
 - **Portable** — single executable; no installer, no registry entries, no admin rights needed
 
 ---
@@ -35,7 +38,7 @@ Built with **.NET 9** and **WPF** — ships as a single `.exe` with no installat
 3. Click **Browse…** next to **Output (.CSV / .TSV) Folder** and choose a destination folder
 4. Select a **Character Set** (defaults to UTF-8)
 5. Choose **Comma separated** or **Tab separated** output
-6. Toggle **Quote strings** as needed
+6. Toggle **Quote strings**, **Include column headers**, and **Overwrite file(s) if exist** as needed
 7. Click **CONVERT**
 
 ---

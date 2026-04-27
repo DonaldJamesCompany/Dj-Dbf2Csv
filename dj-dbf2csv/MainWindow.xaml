@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dj_dbf2csv"
         mc:Ignorable="d"
-        Title="DJ-DBF2CSV v1.1.6"
+        Title="DJ-DBF2CSV v1.1.6" Height="440" Width="740"
         ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Margin="12">
         <Grid.RowDefinitions>
