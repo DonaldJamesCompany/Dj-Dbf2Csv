@@ -323,4 +323,4 @@ A: Use **Comma separated (CSV)** for general-purpose use and maximum compatibili
 
 ---
 
-*DJ-DBF2CSV — © Donald James Company*
+*DJ-DBF2CSV — © Donald James Company — Released under the [MIT License](../LICENSE)*

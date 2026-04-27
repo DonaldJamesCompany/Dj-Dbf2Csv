@@ -65,7 +65,9 @@ dotnet publish dj-dbf2csv/dj-dbf2csv.csproj -c Release -r win-x64 --self-contain
 
 ## License
 
-© Donald James Company. All rights reserved.
+This project is licensed under the [MIT License](LICENSE).
+
+Copyright © Donald James Company.
 
 ---
 
