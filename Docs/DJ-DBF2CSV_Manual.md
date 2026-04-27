@@ -1,8 +1,9 @@
 # DJ-DBF2CSV — User Manual
 
-> **Version:** 1.1.6
+> **Version:** 1.1.6  
 > **Platform:** Windows 10 or later (64-bit)  
-> **Runtime:** .NET 9 Desktop Runtime
+> **Runtime:** .NET 9 Desktop Runtime  
+> **Home Page:** [https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html](https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html)
 
 ---
 
@@ -355,4 +356,4 @@ A: Use **Comma separated (CSV)** for general-purpose use and maximum compatibili
 
 ---
 
-*DJ-DBF2CSV — © Donald James Company — Released under the [MIT License](../LICENSE)*
+*DJ-DBF2CSV — © Donald James Company — Released under the [MIT License](../LICENSE) — [App Home Page](https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html)*

@@ -2,6 +2,8 @@
 
 ![Version](https://img.shields.io/badge/version-1.1.6-blue)
 
+**🏠 [App Home Page](https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html)**
+
 A standalone, portable Windows desktop application that bulk-converts dBASE (`.DBF`) files to **CSV** (Comma Separated Values) or **TSV** (Tab Separated Values) format.
 
 Built with **.NET 9** and **WPF** — ships as a single `.exe` with no installation required.
@@ -79,3 +81,9 @@ Copyright © Donald James Company.
 ## Documentation
 
 Full user documentation is available in [`Docs/DJ-DBF2CSV_Manual.md`](Docs/DJ-DBF2CSV_Manual.md).
+
+---
+
+## Home Page
+
+[https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html](https://www.donaldjamescompany.com/windows-app-dj-dbf2csv.html)
