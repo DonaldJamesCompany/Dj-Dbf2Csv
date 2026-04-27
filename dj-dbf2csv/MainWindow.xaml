@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:dj_dbf2csv"
         mc:Ignorable="d"
         Title="DJ-DBF2CSV v1.1.6" Height="440" Width="740"
+        Icon="Icons/dj-dbf2csv.ico"
         ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid Margin="12">
         <Grid.RowDefinitions>

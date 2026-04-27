@@ -12,10 +12,15 @@
     <FileVersion>1.1.6.0</FileVersion>
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
+    <ApplicationIcon>Icons\dj-dbf2csv.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="DbfDataReader" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Icons\dj-dbf2csv.ico" />
   </ItemGroup>
 
 </Project>
