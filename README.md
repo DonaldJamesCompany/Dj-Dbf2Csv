@@ -33,6 +33,12 @@ Built with **.NET 9** and **WPF** — ships as a single `.exe` with no installat
 
 ---
 
+## Screenshot
+
+<img width="726" height="433" alt="dj-dbf2csv_screenshot" src="https://github.com/user-attachments/assets/40e788ae-02f9-437d-a7e2-add3cb21bc5a" />
+
+---
+
 ## Quick Start
 
 1. Run `dj-dbf2csv.exe`
